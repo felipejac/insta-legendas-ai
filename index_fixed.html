@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instagram Caption Generator</title>
+    <style>
+        body { font-family: Arial; margin: 20px; }
+        input, textarea { width: 100%; padding: 10px; margin: 10px 0; }
+        button { background: #007bff; color: white; padding: 10px 20px; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+<h1>Instagram Caption Generator</h1>
+
+<textarea id="prompt" placeholder="Descreva o que voce quer na legenda"></textarea>
+<button onclick="generateCaption()">Gerar Legenda</button>
+<div id="result"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@google/generative-ai"></script>
+<script>
+    async function generateCaption() {
+        const prompt = document.getElementById('prompt').value;
+        if (!prompt) return alert('Digite algo!');
+        
+        try {
+            const GenAI = window.GoogleGenerativeAI || global.GoogleGenerativeAI;
+            const client = new GenAI.GoogleGenerativeAI('YOUR_API_KEY_HERE');
+            
+            const model = client.getGenerativeModel({ model: "gemini-pro" });
+            const result = await model.generateContent(prompt);
+            const text = result.response.text();
+            
+            document.getElementById('result').innerHTML = `<p><strong>Legenda:</strong> ${text}</p>`;
+        } catch (error) {
+            console.error('Erro:', error);
+            document.getElementById('result').innerHTML = `<p style='color:red'>Erro: ${error.message}</p>`;
+        }
+    }
+</script>
+
+</body>
+</html>
