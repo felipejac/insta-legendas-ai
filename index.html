@@ -184,3 +184,11 @@
     </script>
 </body>
 </html>
+firebase deploy --only hosting
+cat firebase-key.json | head -5
+export FIREBASE_TOKEN=$(firebase login:ci --non-interactive --project insta-legendas-ai 2>/dev/null || echo 'failed')
+firebase deploy --only hosting 2>&1 | tee deploy.log
+tail -20 deploy.log
+
+ls -la public/ 2>/dev/null || echo 'No public dir'
+cat firebase.json

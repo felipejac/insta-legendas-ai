@@ -1,1 +1,1 @@
-{"hosting": {"public": ".", "ignore": ["firebase.json", ".firebaserc", "*.json", ".git*"]}}
+{"hosting": {"public": "."}}
